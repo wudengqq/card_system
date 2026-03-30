@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>卡密管理系统 - 登录</title>
+    <style>
+        body { font-family: Arial; margin: 50px; text-align: center; }
+        输入 { 边距: 10像素; 内边距: 8像素; 宽度: 200像素; }
+        按钮 { 内边距: 8像素 20像素; }
+    </style>
+</head>
+<body>
+    <h2>管理员登录</h2>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <form method="post">
+        <input type="password" name="password" placeholder="请输入密码"><br>
+        <button type="submit">登录</button>
+    </form>
+</body>
+</html>
