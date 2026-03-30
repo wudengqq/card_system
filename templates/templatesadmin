@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>卡密管理系统</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .active { color: green; }
+        .inactive { color: red; }
+        .btn { padding: 4px 8px; text-decoration: none; margin: 2px; display: inline-block; }
+        .btn-green { background-color: #4CAF50; color: white; }
+        .btn-red { background-color: #f44336; color: white; }
+        .btn-blue { background-color: #008CBA; color: white; }
+    </style>
+</head>
+<body>
+    <h2>卡密管理</h2>
+    <form action="/generate" method="post">
+        <button type="submit" class="btn btn-green">生成新卡密</button>
+    </form>
+    <p><a href="/logout" class="btn btn-red">退出登录</a></p>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>卡密</th>
+            <th>状态</th>
+            <th>绑定机器</th>
+            <th>过期时间</th>
+            <th>创建时间</th>
+            <th>操作</th>
+        </tr>
+        {% for card in cards %}
+        <tr>
+            <td>{{ card.id }}</td>
+            <td>{{ card.card_code }}</td>
+            <td class="{% if card.is_active %}active{% else %}inactive{% endif %}">
+                {% if card.is_active %}已激活{% else %}未激活{% endif %}
+            </td>
+            <td>{{ card.bind_machine or '-' }}</td>
+            <td>{{ card.expire_date or '-' }}</td>
+            <td>{{ card.created_at }}</td>
+            <td>
+                <a href="/toggle/{{ card.id }}" class="btn btn-blue">
+                    {% if card.is_active %}禁用{% else %}启用{% endif %}
+                </a>
+                <a href="/delete/{{ card.id }}" class="btn btn-red" onclick="return confirm('确定删除？')">删除</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
